@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const nodeExternals = require("webpack-node-externals");
+const babelLoader = require("babel-loader")
 const CSSExtractPlugin = require("mini-css-extract-plugin");
 const MarkoPlugin = require("@marko/webpack/plugin").default;
 const SpawnServerPlugin = require("spawn-server-webpack-plugin");
@@ -42,18 +43,28 @@ module.exports = [
     devServer: isProd
       ? undefined
       : {
-          hot: false,
-          static: false,
-          host: "0.0.0.0",
-          allowedHosts: "all",
-          port: parseInt(process.env.PORT || 3000, 10),
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-          },
-          ...spawnedServer.devServerConfig,
+        hot: false,
+        static: false,
+        host: "0.0.0.0",
+        allowedHosts: "all",
+        port: parseInt(process.env.PORT || 3000, 10),
+        headers: {
+          "Access-Control-Allow-Origin": "*",
         },
+        ...spawnedServer.devServerConfig,
+      },
     module: {
       rules: [
+        {
+          test: /\.m?js$/,
+          // exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
+          }
+        },
         {
           test: /\.css$/,
           use: [CSSExtractPlugin.loader, "css-loader"],
@@ -97,6 +108,18 @@ module.exports = [
     },
     module: {
       rules: [
+        {
+          test: /\.m?js$/,
+          // exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            // Uncommenting this will break things!
+            // loader: "not a real loader",
+            options: {
+              presets: ['@babel/preset-env']
+            }
+          }
+        },
         {
           test: /\.(jpg|jpeg|gif|png|svg)$/,
           generator: { emit: false },

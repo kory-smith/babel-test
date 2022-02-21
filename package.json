@@ -10,21 +10,26 @@
     "raptor-pubsub": "^1.0.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
     "@marko/compiler": "^5.16.1",
     "@marko/webpack": "^9.2.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.3",
+    "babel-preset-es2015": "^6.24.1",
     "css-loader": "^6.5.0",
     "css-minimizer-webpack-plugin": "^3.1.1",
     "marked": "^3.0.8",
     "mini-css-extract-plugin": "^2.4.3",
     "spawn-server-webpack-plugin": "^6.1.0",
-    "webpack": "^5.60.0",
+    "webpack": "^5.69.1",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.3.1",
     "webpack-node-externals": "^3.0.0"
   },
   "private": true,
   "scripts": {
-    "build": "rm -rf ./dist && NODE_ENV=production webpack --progress",
+    "build": "rm -rf ./dist && NODE_ENV=production webpack --progress --mode development",
     "dev": "webpack serve",
     "dev:inspect": "INSPECT=1 npm run dev",
     "start": "NODE_ENV=production node dist/main.js"
